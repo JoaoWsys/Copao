@@ -11,30 +11,42 @@ namespace Infrastructure.Repositories
 {
     public class UsuarioRepository : IRepository<Usuario>
     {
-        private CopaoDbContext _db;
-        public Task Add(Usuario item)
+        private readonly CopaoDbContext _db;
+        public UsuarioRepository(CopaoDbContext db)
         {
-            _db.Users.Add(item);
+            _db = db;
         }
 
-        public Task Delete(int id)
+        public void Add(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _db.Users.Add(usuario);
         }
 
-        public Task Edit(Usuario item)
+        public void Delete(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _db.Users.Update(usuario);
         }
 
-        public Task<Usuario> Get(int id)
+        public Usuario Edit(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _db.Users.Update(usuario);
+            return usuario;
         }
 
-        public Task<IEnumerable<Usuario>> GetAll()
+        public Usuario Get(int id)
         {
-            throw new NotImplementedException();
+            var usuario = _db.Users.FirstOrDefault(u => u.Id == id);
+            if(usuario != null)
+            {
+                return usuario;
+            }
+            return new Usuario();
+        }
+
+        public IEnumerable<Usuario> GetAll()
+        {
+            var usuarios = _db.Users.ToList();
+            return usuarios;
         }
     }
 }
