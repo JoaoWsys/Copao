@@ -1,7 +1,10 @@
-﻿using Data;
+﻿using Application.Commands.Usuarios;
+using Data;
 using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace CopaoApi.Controllers
 {
@@ -9,11 +12,11 @@ namespace CopaoApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private CopaoDbContext _db;
+        private readonly IMediator _mediator;
 
-        public UserController(CopaoDbContext db)
+        public UserController(IMediator mediator)
         {
-            _db = db;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -24,10 +27,10 @@ namespace CopaoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Usuario user)
+        public async IActionResult Add(CadastraUsuarioCommand command)
         {
-            var users = _db.Users.Add(user);
-            return Ok(users.Entity);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }
