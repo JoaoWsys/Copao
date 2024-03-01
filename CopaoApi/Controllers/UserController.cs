@@ -1,9 +1,6 @@
 ﻿using Application.Commands.Usuarios;
-using Data;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace CopaoApi.Controllers
@@ -27,7 +24,7 @@ namespace CopaoApi.Controllers
         }
 
         [HttpPost]
-        public async IActionResult Add(CadastraUsuarioCommand command)
+        public async Task<IActionResult> Add(CadastraUsuarioCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

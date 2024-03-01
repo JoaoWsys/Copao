@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="AutoMapper\Usuarios\" />
     <Folder Include="EventHandlers\" />
     <Folder Include="Handlers\Queries\" />
     <Folder Include="Notifications\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
